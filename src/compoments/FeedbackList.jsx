@@ -3,11 +3,12 @@ import { useContext } from "react";
 // import PropTypes from "prop-types";
 import FeedbackItem from "./FeedbackItem";
 import FeedbackContext from "../context/FeedbackContext";
+import Spinner from "./shared/Spinner";
 const FeedbackList = () => {
   // console.log(feedback);
-  const { feedback } = useContext(FeedbackContext);
+  const { feedback, isLoading } = useContext(FeedbackContext);
 
-  if (!feedback || feedback.length === 0) {
+  if (!isLoading && (!feedback || feedback.length === 0)) {
     return <div>No Feedback Yet</div>;
   }
   // return (
@@ -20,8 +21,10 @@ const FeedbackList = () => {
   //       />
   //     ))}
   //   </div>
-  // );
-  return (
+  // );  
+  return isLoading ? (
+    <Spinner/>
+  ) : (
     <div className="feedback-list">
       <AnimatePresence>
         {feedback.map((item) => (
